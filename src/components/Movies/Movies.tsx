@@ -15,6 +15,7 @@ import axios from 'axios';
 import { useSearchStore } from '@/store/useSearchStore';
 import { Filters } from '../Filters';
 import { FiltersType } from '../Filters/Filters';
+import { Header } from '../Header';
 
 type PropsType = {};
 
@@ -39,6 +40,7 @@ export const Movies: React.FC<PropsType>  = ({}) => {
 
 	const page = Number(params.get('page')) || 1;
 
+	const [searchBtnRef, setSearchBtnRef] = useState<Element | null>(null);
 	const [moviesData, setMoviesData] = useState<MoviesDataType>();
 	const [isFetching, setIsFetching] = useState<boolean>(false);
 	//TODO: close search -> method - popular
@@ -128,6 +130,15 @@ export const Movies: React.FC<PropsType>  = ({}) => {
 		}
 	}, [isSearchInputShow]);
 	
+	//when page loaded -> document is available
+	useEffect(() => {
+		if(document) {
+			const el = document.getElementById('header_searchBtn') || document.body;
+
+			setSearchBtnRef(el);
+		}
+	}, [])
+
 	if(moviesData === undefined) {
 		//show error
 	}
@@ -163,13 +174,13 @@ export const Movies: React.FC<PropsType>  = ({}) => {
 			}
 
 			{/* using portal to trigger requests form this file */}
-			{createPortal(
+			{searchBtnRef && createPortal(
 				<SearchButton
 					isInputShow={isSearchInputShow} 
 					setIsInputShow={setIsInputShow}
 					getMovies={handleSearchBtnClick}
 				/>,
-				document.getElementById('header_searchBtn') || document.body
+				searchBtnRef
 			)}
 		</div>
 	)

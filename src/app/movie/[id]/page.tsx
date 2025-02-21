@@ -45,7 +45,7 @@ export default async function Page({ params }: { params: {id: string} }) {
 			<MovieInfo 
 				details={details}
 			/>
-			<Reviews id={id} />
+			<Reviews id={id} />            
 		</main>
 	)
 }

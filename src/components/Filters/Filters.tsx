@@ -60,6 +60,7 @@ export const Filters: React.FC<PropsType> = ({activeFilter, setActive}) => {
 							name === activeFilter ? styles._active : ''
 						)}
 						onClick={() => changeActive(name)}
+						key={name}
 					>
 						{translatesObj[name].uk}
 					</ul>

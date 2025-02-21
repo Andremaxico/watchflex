@@ -1,12 +1,13 @@
 @import '../../../app/globals.scss';
 
 .AddPopup {
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
 	@include center-align;
 	width: 100%;
 	height: 100%;
+	background-color: #5656566c;
 	z-index: 3;
 	.body {
 		padding: $base * 5;
