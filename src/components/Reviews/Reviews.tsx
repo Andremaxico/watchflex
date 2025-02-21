@@ -1,4 +1,4 @@
-'use client'
+// 'use client'
 
 import React, { useEffect, useState } from 'react'
 import styles from './Reviews.module.scss';
@@ -22,21 +22,13 @@ const getReviews = async (id: string) => {
 }
 
 export const Reviews: React.FC<PropsType> = async ({id}) => {
-    const [isAddReviewPopupShowing, setIsAddReviewPopupShowing] = useState<boolean>(false);
+    // const [isAddReview  PopupShowing, setIsAddReviewPopupShowing] = useState<boolean>(false);
     const reviews = await getReviews(id) as RequestReviewsResponseDataModel;
 
-    useEffect(() => {
-        // if(isAddReviewPopupShowing) {
-        //     document.body.classList.add('overflow-y-hidden')
-        // } else {
-        //     document.body.classList.remove("overflow-y-hidden")
-        // }
-    }, [isAddReviewPopupShowing])
-
-    const handleClick = () => {
-        const currStatus = isAddReviewPopupShowing;
-        setIsAddReviewPopupShowing(currStatus);   
-    }
+    // const handleClick = () => {
+    //     const currStatus = isAddReviewPopupShowing;
+    //     setIsAddReviewPopupShowing(currStatus);   
+    // }
 
     console.log(reviews);
 
@@ -44,7 +36,7 @@ export const Reviews: React.FC<PropsType> = async ({id}) => {
         <section className={cn(styles.Reviews, 'container')}>
             <div className={styles.top}>
                 <h3 className={styles.title}>Відгуки</h3>
-                <button className={styles.addReviewBtn} onClick={handleClick}>+</button>
+                <button className={styles.addReviewBtn}>+</button>
             </div>
             <div className={styles.reviewsList}>
                 { reviews.results.length > 0 ?
@@ -55,7 +47,7 @@ export const Reviews: React.FC<PropsType> = async ({id}) => {
                     <p className={styles.noText}>Коментарів ще немає</p>
                 }
             </div>
-            <AddPopup isShowing={isAddReviewPopupShowing} />
+            {/* <AddPopup isShowing={isAddReviewPopupShowing} /> */}
         </section>
     )
 }

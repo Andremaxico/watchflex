@@ -22,6 +22,8 @@ export const Auth: React.FC<PropsType> = () => {
 	useEffect(() => {
 		const approved: 'true' | 'false' | null = searchParams.get('approved') as 'true' | 'false' | null;
 
+		console.log('approved', approved);
+
 		switch (approved) {
 			case 'false':
 				setIsAuthed(false);
