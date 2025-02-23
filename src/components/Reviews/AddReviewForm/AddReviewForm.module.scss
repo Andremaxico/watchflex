@@ -1,1 +1,43 @@
 @import '../../../app/globals.scss';
+
+.AddReviewForm {
+	display: flex;
+	flex-direction: column;
+	.commentLabel {
+		font-size: 14px;
+		font-weight: 500;
+		.commentTextarea {
+			margin-top: $base;
+			width: 100%;
+			min-height: $base * 40;
+			padding: $base * 2;
+			border-radius: $base * 2;
+			box-shadow: -2px 7px 10px 0px #8787874f;
+			resize: none;
+			transition: 0.2s;
+			&:hover {
+				box-shadow: none;
+			}
+			&:active {
+				border: 1px solid #5757578e;
+			}
+		}
+	}	
+	.sendBtn {
+		font-size: 14px;
+		color:#fff;
+		padding: $base $base *2;
+		border: 1px solid $primary;
+		background-color: $primary;
+		transition: 0.2s;
+
+		&:hover {
+			color: $primary;
+			background-color: #fff;
+		}
+
+		&:active {
+			transform: translateY(-1px);
+		}
+	}
+}

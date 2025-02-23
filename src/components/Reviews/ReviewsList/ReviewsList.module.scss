@@ -1,0 +1,8 @@
+@import '../../../app/globals.scss';
+
+.ReviewsList {
+	min-height: $base * 50;
+	padding: $base * 5;
+	border-radius: $base * 4;
+	background-color: #fff;
+}

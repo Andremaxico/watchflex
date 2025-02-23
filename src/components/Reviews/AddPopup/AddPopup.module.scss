@@ -16,7 +16,8 @@
 		border-radius: $base * 4;
 		.top {
 			display: flex;
-			flex
+			justify-content: space-between;
+			margin-bottom: $base * 3;
 			.title {
 				font-size: $base * 5;
 				font-weight: 500;
