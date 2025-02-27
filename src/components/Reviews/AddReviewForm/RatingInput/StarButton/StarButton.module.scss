@@ -1,0 +1,40 @@
+@import '../../../../../app/globals.scss';
+
+.StarButton {
+	position: relative;
+	width: 14px;
+	height: 14px;
+
+	.painted::before, .default {
+		position: absolute;
+		left: 0;
+		top: 0;
+		font-size: 14px;
+	}
+	.painted {
+		overflow: hidden;
+		&::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			color: yellow; //TODO: change color to another yellow
+			z-index: 2;
+		}
+	}
+	.default {
+		color: gray;
+	}
+
+	&._full {
+		.painted {
+			width: 100%;
+		}
+	}
+	&._half {
+		.painted {
+			width: 50%;
+		}
+	}
+}

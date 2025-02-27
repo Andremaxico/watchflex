@@ -30,7 +30,7 @@ export const Reviews: React.FC<PropsType> = async ({id}) => {
                 <button className={styles.addReviewBtn} onClick={handleClick}>+</button>
             </div>
             <ReviewsList id={id}/>
-            <AddPopup isShowing={isAddReviewPopupShowing} />
+            <AddPopup isShowing={isAddReviewPopupShowing} movieId={id} />
         </section>
     )
 }

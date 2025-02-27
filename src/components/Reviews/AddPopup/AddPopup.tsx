@@ -5,9 +5,10 @@ import cn from 'classnames'
 
 type PropsType = {
 	isShowing: boolean,
+	movieId: string,
 }
 
-export const AddPopup: React.FC<PropsType> = ({isShowing}) => {
+export const AddPopup: React.FC<PropsType> = ({isShowing, movieId}) => {
 	return (
 		<div className={cn(styles.AddPopup, isShowing ? styles._show : '')}>
 			<div className={styles.body}>
@@ -16,7 +17,7 @@ export const AddPopup: React.FC<PropsType> = ({isShowing}) => {
 					<button className={styles.closeBtn}>x</button>
 				</div>
 
-				<AddReviewForm />
+				<AddReviewForm movieId={movieId} />
 			</div>
 		</div>
 	)

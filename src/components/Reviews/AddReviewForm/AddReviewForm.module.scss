@@ -4,6 +4,8 @@
 	display: flex;
 	flex-direction: column;
 	.commentLabel {
+		margin-bottom: $base;
+		width: 100%;
 		font-size: 14px;
 		font-weight: 500;
 		.commentTextarea {
@@ -18,23 +20,26 @@
 			&:hover {
 				box-shadow: none;
 			}
-			&:active {
+			&:active, &:focus {
 				border: 1px solid #5757578e;
 			}
 		}
 	}	
 	.sendBtn {
+		margin-left: auto;
+		padding: $base $base * 2;
 		font-size: 14px;
 		color:#fff;
-		padding: $base $base *2;
 		border: 1px solid $primary;
 		background-color: $primary;
+		border-radius: $base   ;
 		transition: 0.2s;
-
 		&:hover {
 			color: $primary;
 			background-color: #fff;
 		}
+
+
 
 		&:active {
 			transform: translateY(-1px);
