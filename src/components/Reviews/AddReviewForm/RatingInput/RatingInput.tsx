@@ -19,6 +19,9 @@ export const RatingInput: React.FC<PropsType> = ({setValue}) => {
 		for(let i = 0; i < id-1; i++) {
 			copy[i] = 'full';
 		}
+		for(let i = id+1; i < copy.length; i++) {
+			copy[i] = 'empty'
+		} 
 
 		copy[id-1] = newStatus;
 

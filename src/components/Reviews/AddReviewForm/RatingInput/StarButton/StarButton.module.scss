@@ -5,36 +5,35 @@
 	width: 14px;
 	height: 14px;
 
-	.painted::before, .default {
+	.filled, .border, .half {
 		position: absolute;
 		left: 0;
 		top: 0;
 		font-size: 14px;
 	}
-	.painted {
+	.filled, .half {
 		overflow: hidden;
-		&::before {
-			content: '';
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			color: yellow; //TODO: change color to another yellow
-			z-index: 2;
-		}
+		color: yellow;
+		opacity: 0;
 	}
-	.default {
+	.border {
 		color: gray;
 	}
 
 	&._full {
-		.painted {
-			width: 100%;
+		.filled {
+			opacity: 1;
+		}
+		.border {
+			opacity: 0;
 		}
 	}
 	&._half {
-		.painted {
-			width: 50%;
+		.half {
+			opacity: 1;
+		}
+		.border {
+			opacity: 0;
 		}
 	}
 }

@@ -1,6 +1,9 @@
 'use client'
 
 import { CiStar } from "react-icons/ci";
+import { MdStar } from "react-icons/md";
+import { MdStarBorder } from "react-icons/md";
+import { MdStarHalf } from "react-icons/md";
 import styles from './StarButton.module.scss';
 import React, { useEffect, useRef, useState } from 'react';
 import cn from 'classnames'
@@ -56,8 +59,9 @@ export const StarButton: React.FC<PropsType> = ({id, changeStatus, status}) => {
 			onMouseOver={handleHover}
 			ref={buttonRef}
 		>
-			<CiStar className={styles.painted} />
-			<CiStar className={styles.default} />
+			<MdStar className={styles.filled} />
+			<MdStarBorder className={styles.border} />
+			<MdStarHalf className={styles.half} />
 		</button>
 	)
 }
