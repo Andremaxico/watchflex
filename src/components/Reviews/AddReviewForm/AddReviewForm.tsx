@@ -21,7 +21,7 @@ const addRating = async (value: number, movieId: string) => {
 }
 
 export const AddReviewForm: React.FC<PropsType> = ({movieId}) => {
-	const { control, formState: { errors }, setValue, register, } = useForm<FormDataType>();
+	const { control, formState: { errors }, setValue, register, getValues} = useForm<FormDataType>();
 
 	const handleSubmit = async (data: FormDataType) => {
 		//@ts-expect-error
@@ -31,10 +31,16 @@ export const AddReviewForm: React.FC<PropsType> = ({movieId}) => {
 	const setRatingValue = (value: number) => {
 		setValue('rating', value)
 	}
+	const getRatingValue = (): number => {
+		return getValues('rating')
+	}
 
 	return (
 		<form className={styles.AddReviewForm}>
-			<RatingInput setValue={setRatingValue} />
+			<RatingInput 
+				setValue={setRatingValue} 
+				getValue={getRatingValue}
+			/>
 			<label className={styles.commentLabel}>
 				Ваш відгук
 				<textarea 	

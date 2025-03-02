@@ -11,21 +11,27 @@ import cn from 'classnames'
 export type StatusType = 'half' | 'empty' | 'full'
 
 type PropsType = {
-	status: StatusType,
 	id: number,
-	changeStatus: (status: StatusType, id: number) => void
+	rating: number,
+	setRating: (rating: number) => void,
 }
 
-export const StarButton: React.FC<PropsType> = ({id, changeStatus, status}) => {
-	const [currStatus, setCurrStatus] = useState<StatusType>(status);
+export const StarButton: React.FC<PropsType> = ({id, setRating, rating}) => {
+	const [currStatus, setCurrStatus] = useState<StatusType>('empty');
 	const buttonRef = useRef<HTMLButtonElement>(null);
 
-	useEffect(() => {
-		console.log('curr status', currStatus)
-		changeStatus(currStatus, id)
-	}, [currStatus])
+	const currId = id + 1;
 
-	
+	useEffect(() => {
+		console.log('rating', rating, 'id', currId)
+		if(rating / 2 >= currId) {
+			setCurrStatus('full');
+		} else if (Math.floor(rating / 2) == currId - 1 && currId-1 > 0) {
+			setCurrStatus('half');
+		} else {
+			setCurrStatus('empty')
+		}
+	}, [rating])
 
 	const handleHover = (e: React.MouseEvent<HTMLButtonElement>) => {
 		console.log('handle hover');
@@ -36,13 +42,17 @@ export const StarButton: React.FC<PropsType> = ({id, changeStatus, status}) => {
 			const btnRight = btnLeft + btnWidth;
 			console.log(btnLeft, btnWidth, btnRight, pointerX)
 			if(pointerX - btnLeft > btnWidth / 2 && btnRight - pointerX - btnLeft <= 1) {
-				setCurrStatus('full');
+				setRating(currId*2)
 			} else if (pointerX - btnLeft > btnWidth / 2) {
-				setCurrStatus('half');
+				setRating(currId*2-1)
 			} else {
-				setCurrStatus('empty')
+				setRating((currId-1)*2)
 			}
 		}
+	}
+
+	const handleClick = () => {
+
 	}
 
 	return (
@@ -56,6 +66,7 @@ export const StarButton: React.FC<PropsType> = ({id, changeStatus, status}) => {
 					'' 
 				)
 			}
+			onClick={handleClick}
 			onMouseOver={handleHover}
 			ref={buttonRef}
 		>

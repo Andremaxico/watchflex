@@ -2,14 +2,14 @@
 
 .StarButton {
 	position: relative;
-	width: 14px;
-	height: 14px;
+	width: 24px;
+	height: 24px;
 
 	.filled, .border, .half {
 		position: absolute;
 		left: 0;
 		top: 0;
-		font-size: 14px;
+		font-size: 20px;
 	}
 	.filled, .half {
 		overflow: hidden;

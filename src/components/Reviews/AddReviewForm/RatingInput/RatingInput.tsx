@@ -1,44 +1,42 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { StarButton, StatusType } from './StarButton/StarButton'
 import styles from './RatingInput.module.scss';
 
 type PropsType = {
 	setValue: (value: number) => void,
+	getValue: () => number,
 }
 
-export const RatingInput: React.FC<PropsType> = ({setValue}) => {
-	//5 statuses for 5 stars
-	const [statuses, setStatuses] = useState<StatusType[]>(
-		['empty', 'empty', 'empty', 'empty', 'empty']
-	);
+export const RatingInput: React.FC<PropsType> = ({setValue, getValue}) => {
+	// just to show 5 stars
+	const statusesBase: StatusType[] = ['empty', 'empty', 'empty', 'empty', 'empty']
 
-	const changeStatus = (newStatus: StatusType, id: number) => {
-		const copy = [...statuses];
+	const [rating, setRating] = useState<number>(0);
 
-		//every star before is full if we hover on the middle star
-		for(let i = 0; i < id-1; i++) {
-			copy[i] = 'full';
-		}
-		for(let i = id+1; i < copy.length; i++) {
-			copy[i] = 'empty'
-		} 
-
-		copy[id-1] = newStatus;
-
-		setStatuses([...copy])
+	const hanldeMouseLeave = () => {
+		setRating(0)
 	}
 
-	//we use this array for correctly working keys
-	const starsNumber = [1, 2, 3, 4, 5]
+	const handleMouseEnter = () => {
+		setRating(0)
+	}
+
+	useEffect(() => {
+		console.log('rating changed', rating);
+	}, [rating])
 
 	return (
-		<label className={styles.RatingInput}>
-			{starsNumber.map(starKey => (
-				<StarButton 
-					changeStatus={changeStatus}
-					id={starKey}
-					key={starKey}
-					status={statuses[starKey]}
+		<label 
+			className={styles.RatingInput}
+			onMouseLeave={hanldeMouseLeave}
+			onMouseEnter={handleMouseEnter}
+		>
+			{statusesBase.map((status, idx) => (
+				<StarButton
+					id={idx}
+					key={idx}
+					rating={rating}
+					setRating={setRating}
 				/>
 			))}
 		</label>
