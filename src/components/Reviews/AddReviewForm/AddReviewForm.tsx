@@ -17,15 +17,18 @@ type FormDataType = {
 //In fact, we can only send rating
 
 const addRating = async (value: number, movieId: string) => {
-	const response = axiosInstance.post(`/api/movie${movieId}/add_rating`, value)
+	const response = await axiosInstance.post(`/api/movie/${movieId}/add_rating`, value);
+
+	return response.status;
 }
 
 export const AddReviewForm: React.FC<PropsType> = ({movieId}) => {
-	const { control, formState: { errors }, setValue, register, getValues} = useForm<FormDataType>();
+	const { handleSubmit, formState: { errors }, setValue, register, getValues} = useForm<FormDataType>();
 
-	const handleSubmit = async (data: FormDataType) => {
-		//@ts-expect-error
-		await sendReview(data.rating, movieId)		
+	const onSubmit = async (data: FormDataType) => {
+		const response = await addRating(data.rating, movieId);
+
+		console.log('reponse status', response);
 	}
 
 	const setRatingValue = (value: number) => {
@@ -36,7 +39,10 @@ export const AddReviewForm: React.FC<PropsType> = ({movieId}) => {
 	}
 
 	return (
-		<form className={styles.AddReviewForm}>
+		<form 
+			className={styles.AddReviewForm}
+			onSubmit={handleSubmit(onSubmit)}
+		>
 			<RatingInput 
 				setValue={setRatingValue} 
 				getValue={getRatingValue}

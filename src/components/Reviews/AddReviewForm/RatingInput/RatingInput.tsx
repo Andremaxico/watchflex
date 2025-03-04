@@ -14,22 +14,22 @@ export const RatingInput: React.FC<PropsType> = ({setValue, getValue}) => {
 	const [rating, setRating] = useState<number>(0);
 
 	const hanldeMouseLeave = () => {
-		setRating(0)
+		setRating(getValue());
 	}
 
-	const handleMouseEnter = () => {
-		setRating(0)
-	}
+	// const handleMouseEnter = () => {
+	// 	setRating(0)
+	// }
 
-	useEffect(() => {
-		console.log('rating changed', rating);
-	}, [rating])
+	const saveRating = () => {
+		setValue(rating);
+	}
 
 	return (
 		<label 
 			className={styles.RatingInput}
 			onMouseLeave={hanldeMouseLeave}
-			onMouseEnter={handleMouseEnter}
+			// onMouseEnter={handleMouseEnter}
 		>
 			{statusesBase.map((status, idx) => (
 				<StarButton
@@ -37,8 +37,10 @@ export const RatingInput: React.FC<PropsType> = ({setValue, getValue}) => {
 					key={idx}
 					rating={rating}
 					setRating={setRating}
+					saveRating={saveRating}
 				/>
 			))}
+			<span className={styles.ratingNumber}>{rating > 0 ? rating : ''}</span>
 		</label>
 	)
 }

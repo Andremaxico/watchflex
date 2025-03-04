@@ -14,24 +14,30 @@ type PropsType = {
 	id: number,
 	rating: number,
 	setRating: (rating: number) => void,
+	saveRating: () => void,
 }
 
-export const StarButton: React.FC<PropsType> = ({id, setRating, rating}) => {
+export const StarButton: React.FC<PropsType> = ({id, setRating, rating, saveRating}) => {
 	const [currStatus, setCurrStatus] = useState<StatusType>('empty');
 	const buttonRef = useRef<HTMLButtonElement>(null);
 
 	const currId = id + 1;
 
 	useEffect(() => {
-		console.log('rating', rating, 'id', currId)
+		console.log('rating', rating, 'id', currId, rating / 2, currId - 1)
 		if(rating / 2 >= currId) {
 			setCurrStatus('full');
-		} else if (Math.floor(rating / 2) == currId - 1 && currId-1 > 0) {
+		} else if (
+			rating / 2 > currId - 1 && 
+			Math.floor(rating / 2) == currId - 1 && currId-1 > 0
+		) {
 			setCurrStatus('half');
 		} else {
 			setCurrStatus('empty')
 		}
 	}, [rating])
+
+	console.log('currId', currId, 'rating', rating)
 
 	const handleHover = (e: React.MouseEvent<HTMLButtonElement>) => {
 		console.log('handle hover');
@@ -43,7 +49,7 @@ export const StarButton: React.FC<PropsType> = ({id, setRating, rating}) => {
 			console.log(btnLeft, btnWidth, btnRight, pointerX)
 			if(pointerX - btnLeft > btnWidth / 2 && btnRight - pointerX - btnLeft <= 1) {
 				setRating(currId*2)
-			} else if (pointerX - btnLeft > btnWidth / 2) {
+			} else if (pointerX > btnLeft + 3 && pointerX <= btnRight - (btnWidth / 2)) {
 				setRating(currId*2-1)
 			} else {
 				setRating((currId-1)*2)
@@ -51,8 +57,9 @@ export const StarButton: React.FC<PropsType> = ({id, setRating, rating}) => {
 		}
 	}
 
-	const handleClick = () => {
-
+	const handleClick = (e: React.MouseEvent) => {
+		saveRating();
+		e.preventDefault();
 	}
 
 	return (
