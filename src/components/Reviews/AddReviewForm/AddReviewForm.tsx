@@ -3,9 +3,11 @@ import styles from './AddReviewForm.module.scss'
 import { useForm } from 'react-hook-form'
 import { axiosInstance } from '@/lib/axios'
 import { RatingInput } from './RatingInput/RatingInput'
+import { OperationStatusType } from '../AddPopup/AddPopup'
 
 type PropsType = {
 	movieId: string,
+	setOperationStatus: (status: OperationStatusType) => void,
 }
 
 type FormDataType = {
@@ -22,13 +24,20 @@ const addRating = async (value: number, movieId: string) => {
 	return response.status;
 }
 
-export const AddReviewForm: React.FC<PropsType> = ({movieId}) => {
+export const AddReviewForm: React.FC<PropsType> = ({movieId, setOperationStatus}) => {
 	const { handleSubmit, formState: { errors }, setValue, register, getValues} = useForm<FormDataType>();
 
 	const onSubmit = async (data: FormDataType) => {
+		console.log('start');
+		setOperationStatus('pending')
 		const response = await addRating(data.rating, movieId);
 
-		console.log('reponse status', response);
+		console.log('response reveived', response);
+
+		setOperationStatus(response === 200 ? 'success' : 'failure');
+		setTimeout(() => {
+			setOperationStatus('none');
+		}, 1000)
 	}
 
 	const setRatingValue = (value: number) => {
