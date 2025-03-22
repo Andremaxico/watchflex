@@ -14,6 +14,8 @@ export const MovieInfo: React.FC<PropsType> = ({details}) => {
 
     const genresNames = genres.map(genre => genre.name); 
 
+    console.log('movi info rerender');
+
     return (
         <div className={cn(styles.MovieInfo, 'container')}>
             <Title>{title}</Title>

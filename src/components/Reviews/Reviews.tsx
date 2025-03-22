@@ -1,26 +1,33 @@
 'use client'
 
-import React, { use, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './Reviews.module.scss';
-import { axiosInstance } from '@/lib/axios';
-import { Review } from './Review';
-import { RequestReviewsResponseDataModel } from '@/models';
 import cn from 'classnames'
 import { AddPopup } from './AddPopup';
-import { useBodyStore } from '@/store/useBodyStore';
 import { ReviewsList } from './ReviewsList';
 
 type PropsType = {
     id: string, 
 };
 
+
 export const Reviews: React.FC<PropsType> = async ({id}) => {
     const [isAddReviewPopupShowing, setIsAddReviewPopupShowing] = useState<boolean>(false);
 
+    useEffect(() => {
+        if(isAddReviewPopupShowing) {
+            document.body.style.overflowY = 'hidden'
+        } else {
+            document.body.style.overflowY = 'visible'
+        }
+    }, [isAddReviewPopupShowing])
+
+    const closeAddReviewPopup = () => {
+        setIsAddReviewPopupShowing(false);
+    }
 
     const handleClick = () => {
-        const currStatus = isAddReviewPopupShowing;
-        setIsAddReviewPopupShowing(currStatus);   
+        setIsAddReviewPopupShowing(true);   
     }
 
     return (
@@ -30,7 +37,11 @@ export const Reviews: React.FC<PropsType> = async ({id}) => {
                 <button className={styles.addReviewBtn} onClick={handleClick}>+</button>
             </div>
             <ReviewsList id={id}/>
-            <AddPopup isShowing={isAddReviewPopupShowing} movieId={id} />
+            <AddPopup 
+                isShowing={isAddReviewPopupShowing} 
+                movieId={id} 
+                closePopup={closeAddReviewPopup}
+            />
         </section>
     )
 }
