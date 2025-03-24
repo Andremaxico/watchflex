@@ -11,7 +11,6 @@ export type RequestReviewsResponseDataModel = {
 export type SessionResponseDataModel = {
 	success: boolean,
 	session_id: string,
-	expires_at: string
 }
 
 export type SessionDataViewModel = {

@@ -34,8 +34,12 @@ export const GET = async () => {
 }
 
 //Create session id(password)
-export const POST = async () => {
-	const url = 'https://api.themoviedb.org/ 3/authentication/session/new';
+export const POST = async (req: NextRequest) => {
+	// const reqUrl = new URL(req.url);
+	// const searchParams = new URLSearchParams(reqUrl.searchParams)
+	// const requestToken = searchParams.get('request_token');
+
+	const url = `https://api.themoviedb.org/3/authentication/session/new`;
 	const options = {
 		method: 'POST',
 		headers: {
@@ -54,7 +58,6 @@ export const POST = async () => {
 		return NextResponse.json({
 			success: data.success,
 			id: data.session_id,
-			expiresAt: data.expires_at,
 		})
 	} else {
 		return NextResponse.json({
