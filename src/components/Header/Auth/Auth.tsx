@@ -19,6 +19,8 @@ export const Auth: React.FC<PropsType> = () => {
 
 	const searchParams = useSearchParams();
 
+	//TODO: change the way auth status is defined
+
 	useEffect(() => {
 		const approved: 'true' | 'false' | null = searchParams.get('approved') as 'true' | 'false' | null;
 

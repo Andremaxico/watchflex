@@ -46,7 +46,7 @@ export const LoginButton: React.FC<PropsType> = ({setActionStatus}) => {
 	//redirect user to approve page
 	useEffect(() => {
 		if(requestTokenData?.requestToken && !requestTokenData.approved) {
-			router.push(`https://www.themoviedb.org/authenticate/${requestTokenData.requestToken}?redirect_to=http://${process.env.BASE_URL}`);
+			router.push(`https://www.themoviedb.org/authenticate/${requestTokenData.requestToken}?redirect_to=${process.env.BASE_URL}`);
 		}
 	}, [requestTokenData?.requestToken]);
 
@@ -81,6 +81,9 @@ export const LoginButton: React.FC<PropsType> = ({setActionStatus}) => {
 			})()
 		}
 	}, [isTokenApproved])
+
+	//TODO:
+	// get user data after auth
 
 	return (
 		<button 

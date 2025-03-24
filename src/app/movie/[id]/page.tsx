@@ -27,13 +27,15 @@ export default async function Page({ params }: { params: {id: string} }) {
 
 	const bestBackdrop = data.backdrops.sort((a, b) => a.vote_average > b.vote_average ? 1 : -1)[0];
 
+
+
 	const details = await getDetails(id) as MovieDetailsType;
 
 	return (
 		<main
 			style={{
 				minHeight: '100vh',
-				backgroundImage: `url('http://image.tmdb.org/t/p/original/${bestBackdrop.file_path}')`,
+				backgroundImage: bestBackdrop ? `url('http://image.tmdb.org/t/p/original/${bestBackdrop.file_path}')` : '',
 				backgroundAttachment: 'fixed',
 				backgroundRepeat: 'no-repeat',
 				backgroundSize: 'cover',
