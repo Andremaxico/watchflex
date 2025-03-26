@@ -8,11 +8,11 @@ import { ActionStatusType } from '@/types';
 
 type PropsType = {
 	setActionStatus: (v: ActionStatusType | null) => void,
-	//requestLogin: () => void,
+	authUser: () => Promise<boolean>,
+	setRequestTokenData: (value: RequestTokenViewModel | null) => void,
 };
 
-export const LoginButton: React.FC<PropsType> = ({setActionStatus}) => {
-	const [requestTokenData, setRequestTokenData] = useState<RequestTokenViewModel | null>(null);
+export const LoginButton: React.FC<PropsType> = ({setActionStatus, authUser, setRequestTokenData}) => {
 	const [isTokenApproved, setIsTokenApproved] = useState<boolean>(false);
 
 	const router = useRouter();
@@ -23,32 +23,13 @@ export const LoginButton: React.FC<PropsType> = ({setActionStatus}) => {
 	//get request token
 	const handleClick = async () => {
 		setActionStatus('loading');
-		const response = await fetch('/api/auth', {
-			method: 'GET',
-		});
 
-		const data: RequestTokenViewModel = await response.json();
+		const success = await authUser();
 
-		console.log(data);
-
-		if(data.requestToken) {
-			setRequestTokenData(data);
-		} else {
+		if(!success) {
 			setActionStatus('error');
 		}
 	}
-
-	//update localStorage
-	useEffect(() => {
-		localStorage.setItem('request_token_data', JSON.stringify(requestTokenData));
-	}, [requestTokenData?.requestToken])
-
-	//redirect user to approve page
-	useEffect(() => {
-		if(requestTokenData?.requestToken && !requestTokenData.approved) {
-			router.push(`https://www.themoviedb.org/authenticate/${requestTokenData.requestToken}?redirect_to=${process.env.BASE_URL}`);
-		}
-	}, [requestTokenData?.requestToken]);
 
 	//set approved status
 	useEffect(() => {
@@ -71,13 +52,7 @@ export const LoginButton: React.FC<PropsType> = ({setActionStatus}) => {
 	useEffect(() => {
 		if(isTokenApproved) {
 			(async () => {
-				const response = await fetch('/api/auth', {
-					method: 'POST',
-				});
-
-				const json = await response.json();
-
-				console.log('json with session id', json);
+				
 			})()
 		}
 	}, [isTokenApproved])
