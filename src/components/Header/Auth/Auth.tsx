@@ -9,13 +9,14 @@ import { ActionStatus } from '@/UI/ActionStatus/ActionStatus';
 import { ActionStatusType } from '@/types';
 import { useSearchParams } from 'next/navigation';
 import { RequestTokenViewModel } from '@/models';
-import router from 'next/router';
+import { NextRouter, useRouter } from 'next/router';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 type PropsType = {};
 
 
 //it's just more logical to put this function here
-const authUser = async (): Promise<boolean> => {
+const authUser = async (router: AppRouterInstance): Promise<boolean> => {
 	let requestTokenData = null;
 
 	const response = await fetch('/api/auth', {
@@ -44,22 +45,14 @@ const authUser = async (): Promise<boolean> => {
 export const Auth: React.FC<PropsType> = () => {
 	const [requestTokenData, setRequestTokenData] = useState<RequestTokenViewModel | null>(null);
 	const [sessionId, setSessionId] = useState<string | null>(null);
-	const [isLoginPopupShow, setIsLoginPopupShow] = useState<boolean>(false);
 	//for informing user about actions and better ux
 	const [actionStatus, setActionStatus] = useState<ActionStatusType | null>(null);
 	const [isAuthed, setIsAuthed] = useState<boolean>(false);
 
-	console.log('session id', sessionId);
-	console.log('requesttoken data', requestTokenData);
-	
-
 	useEffect(() => {
 		const approved: boolean | undefined = requestTokenData?.approved;
 
-		console.log('approved', approved);
-
 		setIsAuthed(!!approved);
-
 	}, [requestTokenData])
 
 	return (

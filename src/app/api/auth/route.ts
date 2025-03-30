@@ -39,6 +39,11 @@ export const POST = async (req: NextRequest) => {
 	// const searchParams = new URLSearchParams(reqUrl.searchParams)
 	// const requestToken = searchParams.get('request_token');
 
+	const reader = req.body?.getReader();
+	const result = await reader?.read();
+
+	console.log('reqyest body', result);
+
 	const url = `https://api.themoviedb.org/3/authentication/session/new`;
 	const options = {
 		method: 'POST',
@@ -46,7 +51,8 @@ export const POST = async (req: NextRequest) => {
 			accept: 'application/json',
 			'content-type': 'application/json',
 			Authorization: `Bearer ${process.env.API_READ_ACCESS_TOKEN}`,
-		}
+		},
+		// body: JSON.stringify(requestBody)
 	};
 
 	const response = await fetch(url, options);
