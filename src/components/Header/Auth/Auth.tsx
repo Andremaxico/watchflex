@@ -11,6 +11,9 @@ import { useSearchParams } from 'next/navigation';
 import { RequestTokenViewModel } from '@/models';
 import { NextRouter, useRouter } from 'next/router';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
+import { handleDecryption } from '@/utils/server/decryptData';
+import { useAuthStore } from '@/store/useAuthStore';
+import { handleEncryption } from '@/utils/server/encryptData';
 
 type PropsType = {};
 
@@ -49,11 +52,36 @@ export const Auth: React.FC<PropsType> = () => {
 	const [actionStatus, setActionStatus] = useState<ActionStatusType | null>(null);
 	const [isAuthed, setIsAuthed] = useState<boolean>(false);
 
-	useEffect(() => {
-		const approved: boolean | undefined = requestTokenData?.approved;
+	const { iv, setIV } = useAuthStore();
 
-		setIsAuthed(!!approved);
-	}, [requestTokenData])
+	//once sessionId is generated -> set it to local storage
+	useEffect(() => {
+		if(sessionId) {
+			(async () => {
+				const {encryptedData, initVector} = await handleEncryption(sessionId);
+				setIV(initVector);
+				localStorage.setItem('session_id', encryptedData);
+			})()	
+		}
+	}, [sessionId]) 
+
+	useEffect(() => {
+		//TODO:
+		//do a greater check is id valid
+
+		const id = localStorage.getItem('session_id');
+		(async () => {
+			const decryptedId = await handleDecryption({ id, iv });
+			setSessionId(decryptedId);
+		})()
+	}, [localStorage.getItem('session_id')])
+
+	useEffect(() => {
+		if(sessionId) {
+			setIsAuthed(true);
+		}
+
+	}, [sessionId])
 
 	return (
 		<div className={styles.Auth}>

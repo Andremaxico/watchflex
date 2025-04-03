@@ -1,6 +1,6 @@
 //expecting date in format of tmdb
 
-'2024-11-22T19:35:57.797Z'
+//'2024-11-22T19:35:57.797Z'
 
 export const parseDate = (timestamp: string) => {
 	const [date, time] = timestamp.split('T');
