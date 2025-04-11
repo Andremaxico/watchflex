@@ -11,8 +11,6 @@ type PropsType = {
 export const MovieCard: React.FC<PropsType> = ({data}) => {
 	const currImage = `http://image.tmdb.org/t/p/w500${data.posterUrl}`;
 
-	console.log('id', data.id)
-
 	return (
 		<Link href={'/movie/' + data.id} className={styles.MovieCard}>
 			<div className={styles.poster}>

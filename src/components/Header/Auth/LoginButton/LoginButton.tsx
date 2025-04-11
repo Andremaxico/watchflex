@@ -12,7 +12,8 @@ type PropsType = {
 	setActionStatus: (v: ActionStatusType | null) => void,
 	authUser: (r: AppRouterInstance) => Promise<boolean>,
 	setRequestTokenData: (value: RequestTokenViewModel | null) => void,
-	setSessionId: (value: string | null) => void
+	setSessionId: (value: string | null) => void,
+	requestToken?: string,
 };
 
 //TODO:
@@ -21,9 +22,10 @@ type PropsType = {
 
 //TODO:
 //Write a encoder for the session_id to keep it in localstorage
-const getSessionId = async (): Promise<any> => {
+const getSessionId = async (requestToken: string,): Promise<any> => {
 	const response = await fetch('/api/auth', {
 		method: 'POST',
+		body: JSON.stringify({ requestToken }),
 	});
 
 	const json = await response.json();
@@ -31,7 +33,7 @@ const getSessionId = async (): Promise<any> => {
 	return json;
 }
 
-export const LoginButton: React.FC<PropsType> = ({setActionStatus, authUser, setRequestTokenData, setSessionId}) => {
+export const LoginButton: React.FC<PropsType> = ({setActionStatus, authUser, setRequestTokenData, setSessionId, requestToken}) => {
 	const [isTokenApproved, setIsTokenApproved] = useState<boolean>(false);
 
 	const router = useRouter();
@@ -72,9 +74,10 @@ export const LoginButton: React.FC<PropsType> = ({setActionStatus, authUser, set
 	}, [searchParams]);
 
 	useEffect(() => {
-		if(isTokenApproved) {
+		if(isTokenApproved && requestToken) {
+			console.log('token approved', true);
 			(async () => {
-				const sessionId = await getSessionId();
+				const sessionId = await getSessionId(requestToken);
 				console.log('got session id', sessionId);
 				setSessionId(sessionId);
 			})()

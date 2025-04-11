@@ -60,27 +60,30 @@ export const Auth: React.FC<PropsType> = () => {
 			(async () => {
 				const {encryptedData, initVector} = await handleEncryption(sessionId);
 				setIV(initVector);
+				console.log('session id', sessionId, 'encrypted', encryptedData);
 				localStorage.setItem('session_id', encryptedData);
 			})()	
 		}
 	}, [sessionId]) 
 
+	//set session id to local STORE from local Storage
 	useEffect(() => {
 		//TODO:
 		//do a greater check is id valid
-
 		const id = localStorage.getItem('session_id');
 		(async () => {
+			console.log('encryption key before function', process.env.ENCRYPTION_KEY);
 			const decryptedId = await handleDecryption({ id, iv });
 			setSessionId(decryptedId);
 		})()
-	}, [localStorage.getItem('session_id')])
+	}, [])
 
+	//change authesd status
 	useEffect(() => {
+		console.log('curr session id', sessionId);
 		if(sessionId) {
 			setIsAuthed(true);
 		}
-
 	}, [sessionId])
 
 	return (
@@ -94,6 +97,7 @@ export const Auth: React.FC<PropsType> = () => {
 					authUser={authUser}
 					setRequestTokenData={setRequestTokenData}
 					setSessionId={setSessionId}
+					requestToken={requestTokenData?.requestToken}
 				/>
 			}
 			{/* <LoginPopup 

@@ -41,8 +41,9 @@ export const POST = async (req: NextRequest) => {
 	// const requestToken = searchParams.get('request_token');
 
 	if(req.body) {
+		console.log('request body', req.body);
 		const body = await readableStreamToObject(req.body);
-	
+
 		const url = `https://api.themoviedb.org/3/authentication/session/new`;
 		const options = {
 			method: 'POST',
@@ -57,10 +58,11 @@ export const POST = async (req: NextRequest) => {
 		const response = await fetch(url, options);
 		const data: SessionResponseDataModel = await response.json();
 
+		console.log('response data', data);
 		
 		if(data.success) {
 			return NextResponse.json({
-				success: data.success,
+				success: true,
 				id: data.session_id,
 			})
 		} else {
