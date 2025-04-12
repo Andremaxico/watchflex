@@ -7,6 +7,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { ActionStatusType } from '@/types';
 import { NextRouter } from 'next/router';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
+import { axiosInstance } from '@/lib/axios';
 
 type PropsType = {
 	setActionStatus: (v: ActionStatusType | null) => void,
@@ -23,14 +24,22 @@ type PropsType = {
 //TODO:
 //Write a encoder for the session_id to keep it in localstorage
 const getSessionId = async (requestToken: string,): Promise<any> => {
-	const response = await fetch('/api/auth', {
-		method: 'POST',
-		body: JSON.stringify({ requestToken }),
-	});
+	// const response = await fetch('/api/auth', {
+	// 	method: 'POST',
+	// 	body: JSON.stringify({ requestToken }),
+	// });
 
-	const json = await response.json();
+	const response = await axiosInstance.post('/api/auth', { requestToken });
 
-	return json;
+	const data = response.data;
+
+	console.log('get session id response', data);
+
+	if(!data.success) {
+		return null;
+	}
+
+	return data;
 }
 
 export const LoginButton: React.FC<PropsType> = ({setActionStatus, authUser, setRequestTokenData, setSessionId, requestToken}) => {
@@ -62,6 +71,7 @@ export const LoginButton: React.FC<PropsType> = ({setActionStatus, authUser, set
 				setActionStatus(null);
 			}, 2000)
 			setIsTokenApproved(true);
+
 		}
 
 		if(currTokenData !== null && currTokenData !== undefined) {
@@ -75,11 +85,17 @@ export const LoginButton: React.FC<PropsType> = ({setActionStatus, authUser, set
 
 	useEffect(() => {
 		if(isTokenApproved && requestToken) {
-			console.log('token approved', true);
 			(async () => {
 				const sessionId = await getSessionId(requestToken);
-				console.log('got session id', sessionId);
-				setSessionId(sessionId);
+				
+				if(sessionId) {
+					setSessionId(sessionId);
+				} else {
+					//TODO:
+					//show error
+				}
+
+				router.push(process.env.BASE_URL || '');
 			})()
 		}
 	}, [isTokenApproved])
