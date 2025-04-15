@@ -47,6 +47,7 @@ export const POST = async (req: NextRequest) => {
 		console.log('body', body);
 
 		const url = `https://api.themoviedb.org/3/authentication/session/new`;
+		console.log('url', url);
 		const options = {
 			method: 'POST',
 			headers: {

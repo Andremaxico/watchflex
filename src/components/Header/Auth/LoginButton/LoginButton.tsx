@@ -24,14 +24,13 @@ type PropsType = {
 //TODO:
 //Write a encoder for the session_id to keep it in localstorage
 const getSessionId = async (requestToken: string,): Promise<any> => {
-	// const response = await fetch('/api/auth', {
-	// 	method: 'POST',
-	// 	body: JSON.stringify({ requestToken }),
-	// });
+	const response = await fetch('/api/auth', {
+		method: 'POST',
+		//server needs request_token in this name
+		body: JSON.stringify({ request_token: requestToken }),
+	});
 
-	const response = await axiosInstance.post('/api/auth', { requestToken });
-
-	const data = response.data;
+	const data = await response.json();
 
 	console.log('get session id response', data);
 
