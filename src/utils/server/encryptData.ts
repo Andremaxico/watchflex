@@ -9,15 +9,16 @@ const encryptData = async (plainData: string, encryptionKey: string) => {
 	const cryptoKey = await crypto.subtle.importKey(
 	  "raw",
 	  Buffer.from(encryptionKey, "base64"),
-	  {
-		name: "AES-GCM",
-		length: 256,
-	  },
-	  true,
-	  ["encrypt", "decrypt"]
+		{
+			name: "AES-GCM",
+			length: 256,
+		},
+		true,
+		["encrypt", "decrypt"]
 	);
 
-	console.log('crypto key', cryptoKey);
+	console.log('encryptcrypto key', cryptoKey);
+	console.log('iv in encoding', initVector);
 
 	// Encrypt the encoded data with the key
 	const encryptedData = await crypto.subtle.encrypt(
@@ -33,6 +34,7 @@ const encryptData = async (plainData: string, encryptionKey: string) => {
 	return {
 	  encryptedData: Buffer.from(encryptedData).toString("base64"),
 	  initVector: Buffer.from(initVector).toString("base64"),
+	  cryptoKey,
 	};
   };
   
@@ -40,6 +42,6 @@ export const handleEncryption = async (data: any) => {
 	console.log('encryption key in encryption func', process.env.ENCRYPTION_KEY);
 	return await encryptData(
 		JSON.stringify({ data }),
-		process.env.ENCRYPTION_KEY!
+		process.env.NEXT_PUBLIC_ENCRYPTION_KEY!
 	)
 }

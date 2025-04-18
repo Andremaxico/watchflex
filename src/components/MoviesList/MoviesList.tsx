@@ -11,6 +11,7 @@ type PropsType = {
 
 
 export const MoviesList: React.FC<PropsType> = ({moviesData}) => {
+	console.log('encryption key', process.env.ENCRYP, process.env.BASE_URL, process.env.NEW_VAR);
 	return (
 		<section className={styles.MoviesList}>
 			{moviesData.map(data => (

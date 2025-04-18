@@ -11,7 +11,7 @@ type PropsType = {
 };
 
 
-export const Reviews: React.FC<PropsType> = async ({id}) => {
+export const Reviews: React.FC<PropsType> = ({id}) => {
     const [isAddReviewPopupShowing, setIsAddReviewPopupShowing] = useState<boolean>(false);
 
     useEffect(() => {

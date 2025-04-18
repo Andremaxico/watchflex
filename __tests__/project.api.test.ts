@@ -5,6 +5,8 @@ import {expect, jest, test} from '@jest/globals';
 import { describe, it } from "node:test";
 import { axiosInstance } from "@/lib/axios";
 import axios from "axios";
+import { encryptData } from '@/utils/server/encryptData';
+import { decryptData } from '@/utils/server/decryptData';
 
 // describe('all tests', () => {
 //     it('should print request body', async () => {
@@ -45,4 +47,11 @@ test('should be success', async () => {
     const data = await response.json();
 
     expect(data.success).toBe(true);
+})
+
+test('crypto keys should be the same', async () => {
+    const enc = encryptData('la', process.env.NODE_PUBLIC_ENCRYPTION_KEY!)
+    const dec = decryptData('la', 'init', process.env.NODE_PUBLIC_ENCRYPTION_KEY!);
+
+    console.log(enc, dec);
 })
