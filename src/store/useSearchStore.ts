@@ -1,13 +1,21 @@
 import { create } from 'zustand';
 
 type CounterState = {
-    isSearchInputShow: boolean;  // This holds the current count
-    show: () => void;  // Action to increase the count
-    hide: () => void;  // Action to decrease the count
+    isSearchInputShow: boolean;
+    show: () => void;
+    hide: () => void;
+    searchTrigger: number;
+    triggerSearch: () => void;
+    searchQuery: string;
+    setSearchQuery: (query: string) => void;
 };
 
 export const useSearchStore = create<CounterState>(set => ({
-    isSearchInputShow: false,  // Initial state of the count
-    show: () => set(state => ({isSearchInputShow: true})),  // shows the input
-    hide: () => set(state => ({isSearchInputShow: false})),  // hides the input
+    isSearchInputShow: false,
+    show: () => set(() => ({ isSearchInputShow: true })),
+    hide: () => set(() => ({ isSearchInputShow: false, searchQuery: '' })),
+    searchTrigger: 0,
+    triggerSearch: () => set(state => ({ searchTrigger: state.searchTrigger + 1 })),
+    searchQuery: '',
+    setSearchQuery: (query: string) => set({ searchQuery: query }),
 }));

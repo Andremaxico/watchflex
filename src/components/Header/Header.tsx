@@ -6,14 +6,14 @@ import styles from './Header.module.scss';
 import { Auth } from './Auth';
 import cn from 'classnames'
 import { Search } from './Search';
-import { CloseBtn } from './CloseBtn';
+import { CloseBtn } from './Search/CloseBtn';
 import { useHeaderStore } from '@/store/useHeaderStore';
 
 type PropsType = {};
 
-export const Header: React.FC<PropsType> = ({}) => {
+export const Header: React.FC<PropsType> = ({ }) => {
 	const ref = useRef<HTMLHeadElement>(null); // for the calculatings in other components
-	const setHeaderHeight = useHeaderStore((store) => store.setHeaderHeight); 
+	const setHeaderHeight = useHeaderStore((store) => store.setHeaderHeight);
 
 	useEffect(() => {
 		const height = ref.current?.offsetHeight || 0;
@@ -29,7 +29,6 @@ export const Header: React.FC<PropsType> = ({}) => {
 				</div>
 				<div className={styles.search}>
 					<Search />
-					<CloseBtn />
 				</div>
 				<div className={styles.auth}>
 					<Auth />

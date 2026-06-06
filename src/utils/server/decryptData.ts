@@ -8,7 +8,7 @@ const decryptData = async (
 	// Prepare the decryption key
 	const cryptoKey = await crypto.subtle.importKey(
 		"raw",
-		Buffer.from(encryptionKey, "base64"),
+		new Uint8Array(Buffer.from(encryptionKey, "base64")),
 		  {
 			  name: "AES-GCM",
 			  length: 256,
@@ -44,7 +44,7 @@ const decryptData = async (
 		const decodedData = await crypto.subtle.decrypt(
 			{
 				name: "AES-GCM",
-				iv: Buffer.from(initVector, "base64"),
+				iv: new Uint8Array(Buffer.from(initVector, "base64")),
 			},
 			cryptoKey,
 			stringBuffer

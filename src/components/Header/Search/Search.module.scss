@@ -1,6 +1,7 @@
 @import '../../../app/globals.scss';
 
 .Search {
+	position: relative;
 	@include field;
 	&._focused {
 		@include field-focused;
@@ -21,4 +22,11 @@
 		}
 	}
 	.searchBtn {}
+
+	.closeBtn {
+		position: absolute;
+		right: -$base * 4;
+		top: 50%;
+		transform: translateY(-50%);
+	}
 }

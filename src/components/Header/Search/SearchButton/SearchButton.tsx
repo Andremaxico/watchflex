@@ -9,14 +9,13 @@ type PropsType = {
 	isInputShow: boolean,
 	setIsInputShow: (value: boolean) => void,
 };
-  
 
 
 
-export const SearchButton: React.FC<PropsType> = ({isInputShow, setIsInputShow, getMovies}) => {
+
+export const SearchButton: React.FC<PropsType> = ({ isInputShow, setIsInputShow, getMovies }) => {
 	const handleClick = async () => {
-		if(!isInputShow) {
-			console.log('set is input show true');
+		if (!isInputShow) {
 			setIsInputShow(true);
 		} else {
 			getMovies();
@@ -25,7 +24,7 @@ export const SearchButton: React.FC<PropsType> = ({isInputShow, setIsInputShow, 
 
 
 	return (
-		//on typing -> show predictions
+		//TODO:on typing -> show predictions
 		<button className={styles.SearchButton} onClick={handleClick}>
 			<CiSearch className={styles.icon} />
 		</button>

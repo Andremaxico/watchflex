@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
-import "./nullstyle.scss"
+// @ts-ignore: side-effect import for global SCSS
+import './nullstyle.scss';
+// @ts-ignore: side-effect import for global SCSS
 import "./globals.scss";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
