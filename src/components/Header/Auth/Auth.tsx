@@ -4,8 +4,6 @@ import React, { useEffect, useState } from 'react';
 import styles from './Auth.module.scss';
 import { LoginButton } from './LoginButton';
 import { ProfileIcon } from './ProfileIcon';
-import { ActionStatus } from '@/UI/ActionStatus/ActionStatus';
-import { ActionStatusType } from '@/types';
 import { RequestTokenViewModel } from '@/models';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { handleDecryption } from '@/utils/server/decryptData';
@@ -45,8 +43,6 @@ const authUser = async (router: AppRouterInstance): Promise<boolean> => {
 export const Auth: React.FC<PropsType> = () => {
 	const [requestTokenData, setRequestTokenData] = useState<RequestTokenViewModel | null>(null);
 	const [sessionId, setSessionId] = useState<string | null>(null);
-	//for informing user about actions and better ux
-	const [actionStatus, setActionStatus] = useState<ActionStatusType | null>(null);
 	const [isAuthed, setIsAuthed] = useState<boolean>(false);
 
 	const { iv, setIV } = useAuthStore();
@@ -92,12 +88,10 @@ export const Auth: React.FC<PropsType> = () => {
 
 	return (
 		<div className={styles.Auth}>
-			{!!actionStatus && <ActionStatus status={actionStatus} />}
 			{isAuthed ? 
 				<ProfileIcon />
 			:  
 				<LoginButton 
-					setActionStatus={setActionStatus} 
 					authUser={authUser}
 					setRequestTokenData={setRequestTokenData}
 					setSessionId={setSessionId}

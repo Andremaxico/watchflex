@@ -119,7 +119,7 @@ export const Movies: React.FC<PropsType> = ({ }) => {
 		if (((isMobile && !isSearchInputShow) || searchQuery === '') && moviesSource === 'Search') {
 			setMoviesSource('Popular');
 		}
-	}, [isSearchInputShow, searchQuery, isMobile]);
+	}, [isSearchInputShow, searchQuery, isMobile, moviesSource]);
 
 
 
@@ -156,7 +156,10 @@ export const Movies: React.FC<PropsType> = ({ }) => {
 					</p>
 					: !isFetching ?
 						<p>Помилка</p>
-						: <Preloader />
+						:
+						<div className={styles.preloader}>
+							<Preloader />
+						</div>
 			}
 		</div>
 	)

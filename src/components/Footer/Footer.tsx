@@ -7,7 +7,9 @@ export const Footer: React.FC<PropsType> = () => {
 	return (
 		<footer className={styles.Footer}>
 			<div className="container">
-				All rights reserved @Andremaxico
+				<p className={styles.text}>
+					All rights reserved @Andremaxico
+				</p>
 			</div>
 		</footer>
 	)

@@ -6,4 +6,8 @@
 	// left: 0;
 	height: 40px;
 	@include center-align;
+	background-color: rgb(250, 250, 250);
+	.text {
+		text-align: center;
+	}
 }

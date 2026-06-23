@@ -4,13 +4,12 @@ import React, { useEffect, useState } from 'react';
 import styles from './LoginButton.module.scss';
 import { RequestTokenViewModel } from '@/models';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { ActionStatusType } from '@/types';
 import { NextRouter } from 'next/router';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { axiosInstance } from '@/lib/axios';
+import { Preloader } from '@/UI/Preloader/Preloader';
 
 type PropsType = {
-	setActionStatus: (v: ActionStatusType | null) => void,
 	authUser: (r: AppRouterInstance) => Promise<boolean>,
 	setRequestTokenData: (value: RequestTokenViewModel | null) => void,
 	setSessionId: (value: string | null) => void,
@@ -41,22 +40,21 @@ const getSessionId = async (requestToken: string,): Promise<any> => {
 	return data;
 }
 
-export const LoginButton: React.FC<PropsType> = ({setActionStatus, authUser, setRequestTokenData, setSessionId, requestToken}) => {
+export const LoginButton: React.FC<PropsType> = ({authUser, setRequestTokenData, setSessionId, requestToken}) => {
 	const [isTokenApproved, setIsTokenApproved] = useState<boolean>(false);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const router = useRouter();
 	const searchParams = useSearchParams();
 
-	console.log(setActionStatus);
-
 	//get request token
 	const handleClick = async () => {
-		setActionStatus('loading');
+		setIsLoading(true);
 
 		const success = await authUser(router);
 
 		if(!success) {
-			setActionStatus('error');
+			setIsLoading(false);
 		}
 	}
 
@@ -65,10 +63,6 @@ export const LoginButton: React.FC<PropsType> = ({setActionStatus, authUser, set
 		const currTokenData = JSON.parse(localStorage.getItem('request_token_data') || '');
 
 		if(searchParams.get('approved') && searchParams.get('request_token')) {
-			setActionStatus('success');
-			setTimeout(() => {
-				setActionStatus(null);
-			}, 2000)
 			setIsTokenApproved(true);
 
 		}
@@ -107,7 +101,7 @@ export const LoginButton: React.FC<PropsType> = ({setActionStatus, authUser, set
 			className={styles.LoginButton} 
 			onClick={handleClick}
 		>
-			Увійти
+			{isLoading ? <Preloader /> : 'Увійти'}
 		</button> 		
 	)
 }

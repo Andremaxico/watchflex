@@ -2,10 +2,17 @@
 
 .Movies {
 	margin-top: $base * 2;
+	margin-bottom: $base * 2;
 	.filters {
 		margin-bottom: $base * 2;
 	}
 	.list {
 		margin-bottom: $base * 4;
+	}
+	.preloader {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 100%;
 	}
 }
