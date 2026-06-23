@@ -32,16 +32,13 @@ export default async function Page({ params }: { params: {id: string} }) {
 	const details = await getDetails(id) as MovieDetailsType;
 
 	return (
-		<main
-			style={{
-				minHeight: '100vh',
-				backgroundImage: bestBackdrop ? `url('http://image.tmdb.org/t/p/original/${bestBackdrop.file_path}')` : '',
-				backgroundAttachment: 'fixed',
-				backgroundRepeat: 'no-repeat',
-				backgroundSize: 'cover',
-			}}
-			className={styles.main}
-		>	
+		<main className={styles.main}>	
+			<div 
+				className={styles._backgroundFixed} 
+				style={{
+					backgroundImage: bestBackdrop ? `url('http://image.tmdb.org/t/p/original/${bestBackdrop.file_path}')` : '',
+				}}
+			/>
 			<div className={styles._backTint}></div>
 			<ScrollDownArrow />
 			<MovieInfo 
